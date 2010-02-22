@@ -1,0 +1,6 @@
+<% if logged_in? %>
+<%=  current_user.login %>.
+<%=  link_to 'Logout', authenticated_system_logout_path %>.
+<% else %>
+<%=  link_to 'Login', authenticated_system_login_path %>
+<% end %>

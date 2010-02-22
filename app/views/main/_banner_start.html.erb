@@ -1,0 +1,18 @@
+<div class="header-links">
+  <table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="2%">&nbsp;</td>
+
+      <td width="42%"><%= link_to ts('home.this'), root_path %></td>
+      <td width="14%"><div id="div_admin-links"></div></td>
+      <td width="14%" align="center">
+<%=     render :partial => 'sessions/language_options' %>       
+      </td>
+      <td width="28%">
+	   	 <small><div id="div_login">
+<%=        render :partial => 'main/login_status' %>
+         </div></small>
+      </td>
+    </tr>
+  </table>
+</div>

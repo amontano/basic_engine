@@ -1,0 +1,108 @@
+== Welcome to the Basic Authenticated App Plugin
+
+This application is meant to be the starting point for new Ruby on Rails applications with a nice basic theme. 
+It consists of already implemented basic functionality so that the developer can focus on solving the actual problem.
+
+It includes:
+- Generic look and feel
+- Open id authentication
+- User management with roles and privileges
+- Support for complex scripts
+- Multilingual interfase
+
+== Getting Started
+
+1. Build a new a application:
+
+rails blue_app
+
+
+2. Install the plugin:
+
+script/plugin install -e https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/basic_engine/trunk
+
+(if the project is in a svn repository you may want to use -x instead of -e)
+
+3. Install the dependent plugins:
+
+rake basic_engine:install_dependencies
+
+4. Copy migrations and public files from all plugins:
+
+rake basic_engine:deploy_dependencies
+
+5. The next step is updating the config/database.yml file to setup the database correctly.
+
+At this point, you DON'T need to go to your database manager to create such db's. We will do that next within rails.
+Just make sure that the user and password we specify in database.yml WILL have access to such db's. For instance,
+in my development machine the rubyuser mysql account have full privileges on %_development. This way I know the rubyuser
+account will be able to access any new development db even if it doesn't exist yet!
+
+This may be quite obvious, but I will say it anyway. DON'T commit the user and password for the production db.
+Remember this is a public repository and if you do, you are giving everybody access to such db.
+
+6. Now lets create the databases from rails. To create the development db simply run (if you want to do this on the
+production db, simply add RAILS_ENV=production to all of the next statements):
+
+rake db:create
+
+5. Create the rest of the tables by running the migration:
+
+rake db:migrate
+
+6. Create a home for the application
+
+script/generate controller home index
+
+add this home as your root path in config/routes.rb:
+
+map.root :controller => 'home', :action => 'index'
+
+Delete the default index.html, application controller and helper (or copy content of application controller and helper
+in basic engine if you plan to use):
+
+rm public/index.html
+rm app/controllers/application_controller.rb
+rm app/helpers/application_helper.rb
+
+7. Now we have to update the roles and privileges. If you see the first migration under db/migrate/001_create_users.rb
+you will notice that only one user has been created (user 'root', password 'rootdude'). He is a system administrator,
+but for now a system administrator ONLY has privileges to update roles. So run the server:
+
+script/server
+
+And browse to http://localhost:3000
+
+Next login with user 'root', password 'rootdude'
+
+8. Browse to http://localhost:3000/roles
+
+Select system administrator -> edit. Under available roles, click "select all" and the ">" button and then save changes.
+Notice that now you have a lot more links on the right side navigation. As you create new controllers it is a good idea
+that you create roles for the various kinds of expected users that will change data (end users that are just visiting
+won't need an account) and when you create new users associate them with the respective roles, i.e. don't make everybody
+a system administrator!
+
+9. Start developing!
+
+== Tips
+
+- Try to make all of your controllers RESTful. This will facilitate providing web-services to other applications
+- To restrict access to a controller, make it inherit from AclController instead of ApplicationController. Only
+  people with the role that has the privileges for each action of that controller will be able to access it. See
+  app/controllers/acl_controller.rb for more information.
+- See app/helpers/application_helper.rb. There is where you define the side column links, stylesheets and javascript
+  to be used by all controllers in the application. You can override any of the three by redefining its method on the
+  controller's helper.
+
+
+Plugins used:
+
+annotate_models:        http://repo.pragprog.com/svn/Public/plugins/annotate_models
+authenticated_system:   https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/authenticated_system/trunk
+basic_engine:           https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/basic_engine/trunk
+complex_scripts:        http://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/complex_scripts/trunk
+globalize2:             git://github.com/joshmh/globalize2.git
+in_place_editing:       http://dev.rubyonrails.org/svn/rails/plugins/in_place_editing
+open_id_authentication: git://github.com/rails/open_id_authentication.git
+restful-authentication: git://github.com/technoweenie/restful-authentication.git
