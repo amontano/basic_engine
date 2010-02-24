@@ -19,9 +19,9 @@ namespace :basic_engine do
      else
        git_installers = { 'annotate_models' => 'git://github.com/ctran/annotate_models.git', 'authenticated_system' => 'git://github.com/thl/authenticated_system.git', 'complex_scripts' => 'git://github.com/thl/complex_scripts.git', 'globalize2' => 'git://github.com/joshmh/globalize2.git', 'open_id_authentication' => 'git://github.com/rails/open_id_authentication.git', 'restful-authentication'  => 'git://github.com/technoweenie/restful-authentication.git' }
        if File.exists?(File.join(RAILS_ROOT, '.git'))
-         git_installers.each_with_index{ |url, path| "git submodule add #{url} vendor/plugins/#{path}" }
+         git_installers.each{ |path, url| system "git submodule add #{url} vendor/plugins/#{path}" }
        else
-         git_installers.each_with_index{ |url, path| "script/plugin install #{url}" }
+         git_installers.each{ |path, url| system "script/plugin install #{url}" }
        end
      end
    end
