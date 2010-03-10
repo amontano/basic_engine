@@ -17,7 +17,7 @@ namespace :basic_engine do
         'git://github.com/rails/open_id_authentication.git',
         'git://github.com/technoweenie/restful-authentication.git'].each{ |plugin| system "script/plugin install #{plugin}"}
      else
-       git_installers = { 'annotate_models' => 'git://github.com/ctran/annotate_models.git', 'authenticated_system' => 'git://github.com/thl/authenticated_system.git', 'complex_scripts' => 'git://github.com/thl/complex_scripts.git', 'globalize2' => 'git://github.com/joshmh/globalize2.git', 'open_id_authentication' => 'git://github.com/rails/open_id_authentication.git', 'restful-authentication'  => 'git://github.com/technoweenie/restful-authentication.git' }
+       git_installers = { 'annotate_models' => 'git://github.com/amontano/annotate_models.git', 'authenticated_system' => 'git://github.com/thl/authenticated_system.git', 'complex_scripts' => 'git://github.com/thl/complex_scripts.git', 'globalize2' => 'git://github.com/joshmh/globalize2.git', 'open_id_authentication' => 'git://github.com/rails/open_id_authentication.git', 'restful-authentication'  => 'git://github.com/technoweenie/restful-authentication.git' }
        if File.exists?(File.join(RAILS_ROOT, '.git'))
          git_installers.each{ |path, url| system "git submodule add #{url} vendor/plugins/#{path}" }
        else
