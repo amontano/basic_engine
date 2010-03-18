@@ -5,11 +5,14 @@
 body {
   color: 	#330000;
   font-family: "Arial Unicode MS", "Gentium", "Lucida Grande", "Microsoft Sans Serif", "Tahoma", sans-serif, "XenoType Tibetan New","Tibetan Machine Uni"!important;
-  text-align: justify;
   margin:0px;
   padding:0px;
   font-size: 14px;
   background-color: #4B7399;
+}
+
+p {
+  text-align: justify;	
 }
 
 h4 {
