@@ -6,6 +6,7 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE">
 <%= javascripts %>
 <%= stylesheets %>
+<%= csrf_meta_tag %>
 </head>
 <body <%= "onload = \"#{@onload}\"" if @onload %> class="collections single-col mms-media">
 <%= render :partial => 'main/banner_start' %>
