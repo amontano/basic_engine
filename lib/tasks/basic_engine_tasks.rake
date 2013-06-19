@@ -6,7 +6,7 @@ namespace :basic_engine do
    
    desc "Installs dependent plugins for basic engine."
    task :install_dependencies do
-     if File.exists?(File.join(RAILS_ROOT, '.svn'))
+     if File.exists?(Rails.root.join('.svn'))
        svn_option = '-x' # for external use '-e'
        ['http://repo.pragprog.com/svn/Public/plugins/annotate_models',
         'https://ndlb.svn.sourceforge.net/svnroot/ndlb/portal/ror/plugins/authenticated_system/trunk',
@@ -17,9 +17,12 @@ namespace :basic_engine do
         'git://github.com/rails/open_id_authentication.git',
         'git://github.com/technoweenie/restful-authentication.git'].each{ |plugin| system "script/plugin install #{plugin}"}
      else
-       git_installers = { 'annotate_models' => 'git://github.com/amontano/annotate_models.git', 'authenticated_system' => 'git://github.com/thl/authenticated_system.git', 'complex_scripts' => 'git://github.com/thl/complex_scripts.git', 'globalize2' => 'git://github.com/joshmh/globalize2.git', 'open_id_authentication' => 'git://github.com/rails/open_id_authentication.git', 'restful-authentication'  => 'git://github.com/technoweenie/restful-authentication.git' }
-       if File.exists?(File.join(RAILS_ROOT, '.git'))
-         git_installers.each{ |path, url| system "git submodule add #{url} vendor/plugins/#{path}" }
+       git_installers = { 'annotate_models' => ['git://github.com/amontano/annotate_models.git', 'rails3_0'], 'authenticated_system' => ['git://github.com/thl/authenticated_system.git', 'rails3_0'], 'complex_scripts' => ['git://github.com/thl/complex_scripts.git', 'rails3_1'], 'restful-authentication'  => ['git://github.com/Satish/restful-authentication.git', nil] }
+       if File.exists?(File.join(Rails.root.join('.git')))
+         git_installers.each do |path, url|
+           system "git submodule add #{url[0]} vendor/plugins/#{path}"
+           system "cd vendor/plugins/#{path}; git checkout #{url[1]}" if !url[1].nil?
+         end
        else
          git_installers.each{ |path, url| system "script/plugin install #{url}" }
        end
