@@ -17,11 +17,11 @@ namespace :basic_engine do
         'git://github.com/rails/open_id_authentication.git',
         'git://github.com/technoweenie/restful-authentication.git'].each{ |plugin| system "script/plugin install #{plugin}"}
      else
-       git_installers = { 'annotate_models' => ['git://github.com/amontano/annotate_models.git', 'rails3_0'], 'authenticated_system' => ['git://github.com/thl/authenticated_system.git', 'rails3_0'], 'complex_scripts' => ['git://github.com/thl/complex_scripts.git', 'rails3_1'], 'restful-authentication'  => ['git://github.com/Satish/restful-authentication.git', nil] }
+       git_installers = { 'annotate_models' => ['git://github.com/amontano/annotate_models.git', 'rails3_0'], 'authenticated_system' => ['git://github.com/thl/authenticated_system.git', 'rails3_0'], 'complex_scripts' => ['git://github.com/thl/complex_scripts.git', 'rails3_0'], 'restful-authentication'  => ['git://github.com/Satish/restful-authentication.git', nil] }
        if File.exists?(File.join(Rails.root.join('.git')))
          git_installers.each do |path, url|
            system "git submodule add #{url[0]} vendor/plugins/#{path}"
-           system "cd vendor/plugins/#{path}; git checkout #{url[1]}" if !url[1].nil?
+           system "cd vendor/plugins/#{path}; git checkout #{url[1]}; cd ../../.." if !url[1].nil?
          end
        else
          git_installers.each{ |path, url| system "script/plugin install #{url}" }

@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module BasicEngineHelper
   def stylesheet_files
-    ['authenticated_system', 'base', 'language_support']
+    ['authenticated_system', 'base', 'language_support', 'jquery-ui']
   end
   
   def javascript_files
